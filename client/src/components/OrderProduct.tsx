@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import type { Order, Review } from '../api/types';
-import { useMe } from '../stores';
-import {ReviewControlsComponent} from './ReviewControlsComponent';
+import type { Order } from '../api/types';
 
 export const OrderProductComponent: React.FC<Order['positions'][number] & { isWithProductLink?: boolean }> = (
   props
@@ -13,15 +11,9 @@ export const OrderProductComponent: React.FC<Order['positions'][number] & { isWi
       <img width={150} height={150} src={props.image_url} alt={props.name} />
       <div>{props.description}</div>
       <div>{props.price} ₽</div>
-      <div>
-        Категория: <Link to={`/?category_id=${props.category_id}`}>{props.category_name}</Link>
-      </div>
-      {/* !!! */}
-      <div>
-        Продавец: <Link to={`/stores/${props.store_id}`}>{props.store_name}</Link>
-      </div>
+      {props.quantity > 1 && <div>{props.quantity} позиций</div>}
+      {props.quantity > 1 && <div>Всего {props.quantity * props.price} ₽</div>}
       <hr />
-      <ReviewControlsComponent {...props} />
     </div>
   );
 };

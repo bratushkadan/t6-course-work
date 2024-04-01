@@ -1,15 +1,12 @@
 import './App.css';
 
-import { createBrowserRouter, RouterProvider, Link, useParams, Outlet } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import { LoginPanel } from './components/LoginPanel';
 import { NavMenu } from './components/NavMenu';
 import { NotFound } from './pages/NotFound';
 import { Catalog } from './pages/Catalog';
-import { StoresPage } from './pages/Stores';
-import { StorePage } from './pages/Store';
 import { OrdersPage } from './pages/Orders';
-import { FavoritesPage } from './pages/Favorites';
 import {OrderPage} from './pages/Order';
 import {CartPage} from './pages/Cart';
 import {ProductPage} from './pages/Product';
@@ -80,12 +77,9 @@ export const router = createBrowserRouter([
     children: [
       { path: '', element: <Catalog /> },
       { path: 'cart', element: <CartPage/> },
-      { path: 'stores', element: <StoresPage /> },
-      { path: 'stores/:id', element: <StorePage /> },
       { path: 'products/:id', element: <ProductPage /> },
       { path: 'orders', element: <OrdersPage /> },
       { path: 'orders/:id', element: <OrderPage /> },
-      { path: 'favorites', element: <FavoritesPage /> },
       { path: '*', element: <NotFound /> },
     ],
   },

@@ -9,7 +9,7 @@ export const OrderInfoComponent: React.FC<OrderInfo & { isWithOrderLink?: boolea
     <>
       <h2>
         <>
-          {props.isWithOrderLink ? <Link to={`/orders/${props.id}`}>Заказ №{props.id}</Link> : <>Заказ №{props.id}</>}
+          {props.isWithOrderLink ? <Link to={`/orders/${props.id}`}>Заказ</Link> : <>Заказ</>}
         </>{' '}
         от {dayjs(props.created).format('DD.MM.YYYY HH:mm:ss')}
       </h2>

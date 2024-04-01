@@ -1,40 +1,21 @@
 version: '3'
 
 services:
-  server:
-    image: golang:1.21.1-bookworm
-    ports:
-      - 8080
-    command: ['go', 'run', '/app/*.go']
-    volumes:
-      - ./:/app
-    networks:
-      - course_work_app_network
-    environment:
-      POSTGRES_HOST: localhost
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: bratushkadan
-      POSTGRES_PASSWORD: '123'
-      POSTGRES_DB: floral
-    depends_on:
-      db:
-        condition: service_healthy
   db:
-    image: postgres:16
+    image: mongo:7.0.7-jammy
     ports:
-      # FIXME: - 5432
-      - 5432:5432
+      - "27017:27017"
     restart: always
     environment:
-      POSTGRES_USER: bratushkadan
-      POSTGRES_PASSWORD: '123'
-      POSTGRES_DB: floral
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: dumplings
     networks:
       - course_work_app_network
     volumes:
-      - course_work_postgres_volume:/var/lib/postgresql/data
+      - course_work_t6_mongo_volume:/var/lib/postgresql/data
     healthcheck:
-      test: ['CMD-SHELL', 'test -n `pg_isready -U $POSTGRES_USER $POSTGRES_DB | grep "accepting connections"`']
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
       interval: 0.5s
       retries: 10
   s3:
@@ -52,7 +33,7 @@ services:
       - course_work_s3_volume:/data
     
 volumes:
-  course_work_postgres_volume:
+  course_work_t6_mongo_volume:
   course_work_s3_volume:
 networks:
   course_work_app_network:

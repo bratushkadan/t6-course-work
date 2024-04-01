@@ -1,29 +1,9 @@
-import { Product, GetProductsPayload, OrderInfo } from './types';
+import { Product, OrderInfo } from './types';
 
 export const transformProduct: (product: Product) => Product = (product) => ({
   ...product,
   price: product.price / 100,
 });
-
-export const transformProductsSearchParams = (params: URLSearchParams) => {
-  const payload = {
-    sort: omitFalsy({
-      by: params.get('sort_by'),
-      order: params.get('sort_order'),
-    }),
-    filter: omitFalsy({
-      like_name: params.get('product_name'),
-      store_id: params.get('store_id'),
-      store_name: params.get('store_name'),
-      category_id: params.get('category_id'),
-      min_height: params.get('min_height'),
-      max_height: params.get('max_height'),
-      min_price: Math.trunc(Number(params.get('min_price')) * 100),
-      max_price: Math.trunc(Number(params.get('max_price')) * 100),
-    }),
-  } as GetProductsPayload;
-  return payload;
-};
 
 export function omitFalsy(obj: Record<string, unknown>) {
   return Object.fromEntries(Object.entries(obj).filter(([_, val]) => Boolean(val)));
@@ -38,11 +18,11 @@ export const localizeOrderStatus = (status: OrderInfo['status']): string => {
     case 'completed':
       return 'Выполнен'
     case 'delivery':
-      return 'Доставляется'
+      return 'Курьер спешит к вам'
     case 'in_progress':
-      return 'В сборке'
+      return 'Готовится'
     case 'processed':
-      return 'Собран и ожидает отправки'
+      return 'Ждем курьера'
     default:
     throw new Error('такого статуса заказа нет!')
   }

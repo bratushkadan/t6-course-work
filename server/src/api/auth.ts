@@ -3,12 +3,9 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 
 import { logger } from '../logger'
+import { UserModel } from '../models'
 
 const authRouter = express.Router()
-
-type AuthToken = {
-    token: string
-}
 
 class UserAuth {
   email: string;
@@ -36,15 +33,21 @@ class UserAuth {
   }
 }
 
-authRouter.get('/token/user', (req, res) => {
+authRouter.get('/token/user', async (req, res) => {
     const {email, password} = req.query
 
     try {
-        // Fetch the user from database
+        // TODO: Fetch the user from database
+        const fetchedUser = await UserModel.findOne({email: email as string})
+        if (!fetchedUser) {
+            res.status(404)
+            res.send({error: 'user not found'})
+            return 
+        }
         const user = new UserAuth(email as string, password as string);
 
         // If the user is found and password is valid
-        if (user.checkValidPassword(password as string)) {
+        if (user.checkValidPassword(fetchedUser.password)) {
             return res.send({ token: user.generateAuthToken() });
         }
     } catch (err) {
@@ -68,17 +71,32 @@ authRouter.post('/token/user', (req, res) => {
       res.send({valid: true});
   });
 })
-authRouter.get('/token/me', (req, res) => {
+authRouter.get('/token/me', async (req, res) => {
   // check header for the token
   const token = req.get('X-Auth-Token');
 
   // decode token
   if (token) {
-    return jwt.verify(token as string, "secretkey", (err: unknown, decoded) => {
+    return jwt.verify(token as string, "secretkey", async (err: unknown, decoded) => {
       if (err) {
         return res.status(500).send({error: 'Failed to authenticate token.' });
       }
-      res.send({id: 0, first_name: "Danila", last_name: "Bratushka", phone_number: '8-800-555-35-35', email: (decoded as unknown as {email: string}).email});
+      const fetchedUser = await UserModel.findOne({
+          email: (decoded as unknown as {email: string}).email
+      })
+      if (!fetchedUser) {
+          res.status(404)
+          res.send({error: 'user not found'})
+          return 
+      }
+      // TODO: fetch from database
+      res.send({
+          id: fetchedUser.id,
+          first_name: fetchedUser.first_name,
+          last_name: fetchedUser.last_name,
+          phone_number: fetchedUser.phone_number,
+          email: (decoded as unknown as {email: string}).email,
+      });
     });
   }
 

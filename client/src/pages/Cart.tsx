@@ -17,6 +17,18 @@ export const CartPage: React.FC = () => {
     }
   }, [token]);
 
+  const handleClearCart = () => {
+      if (!token) {
+          return
+      }
+
+    api
+        .clearCart(token)
+        .then(() => {
+            setCart([])
+        })
+  }
+
   const handlePlaceOrder = () => {
     if (!token) {
       return;
@@ -34,6 +46,7 @@ export const CartPage: React.FC = () => {
   return (
     <>
       <h1>Корзина{cart.length === 0 ? <span> пуста</span> : <span></span>}</h1>
+      {cart.length === 0 ? '' : <BlockBtn onClick={handleClearCart}>Очистить корзину</BlockBtn>}
       {cart.length > 0 && cart.map((props) => <CartPositionComponent key={props.product_id} {...props} />)}
       {cart.length > 0 && <BlockBtn onClick={handlePlaceOrder}>Сделать заказ</BlockBtn>}
     </>

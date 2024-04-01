@@ -1,19 +1,21 @@
-# TypeScript scaffolding using SWC
+# Node.js Dumplings server
 
 ## Commands
 
-### install
+### build
 
-`npm ci`
+1.`npm ci`
+2. `tsc`
 
 ### development
 
-`npm run dev`
-
-### npm
-
-`command` — run an arbitrary script in *src/* directory. Examples:
-
-```sh
-npm run command -- build/command/hello.js # runs src/command/hello.ts script
+Start Mongo:
 ```
+docker-compose up db
+```
+
+Start server:
+```
+npm run dev
+```
+
