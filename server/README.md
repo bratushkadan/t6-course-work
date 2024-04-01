@@ -42,7 +42,8 @@ export VM_ADDRESS=""; ssh "$VM_ADDRESS" <install-docker.sh
 
 1. Login into docker registry (https://yandex.cloud/ru/docs/container-registry/operations/authentication?from=int-console-help-center-or-nav#method)
 2. Populate *.env* file with production values
-3. Run *deploy.sh*
+3. Replace "image" field in docker-compose.yml files with current images pushed to registry
+4. Run *deploy.sh*
 
 ### development
 

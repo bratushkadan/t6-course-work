@@ -14,7 +14,5 @@ RUN npm ci && \
 
 FROM nginx:1.25.4-alpine3.18
 
-USER frontend
-
 COPY --from=build /app/dist /usr/share/nginx/html
 

@@ -18,6 +18,9 @@ COPY --from=build /app /var/www/html/app
 
 WORKDIR /var/www/html/app
 
+RUN addgroup --system backend && \
+    adduser --system --ingroup backend backend
+
 USER backend
 
 CMD ["/usr/local/bin/node", "./build/index.js"]

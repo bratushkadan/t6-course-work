@@ -59,7 +59,7 @@ async function runServer() {
         throw new Error('Missing env "APP_MONGO_HOSTNAME"')
     }
 
-    await mongoose.connect(`mongodb://${APP_MONGO_USERNAME}:${APP_MONGO_USERNAME}@${APP_MONGO_HOSTNAME}/dumplings?authSource=admin`)
+    await mongoose.connect(`mongodb://${APP_MONGO_USERNAME}:${APP_MONGO_PASSWORD}@${APP_MONGO_HOSTNAME}/dumplings?authSource=admin`)
     
     app.listen(8080)
 }
