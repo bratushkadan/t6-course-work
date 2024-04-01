@@ -20,7 +20,7 @@ app.use(cors())
 app.use((req, _, next) => {
     // @ts-ignore
     req.isAdmin = function() {
-        const SECRET_ADMIN_TOKEN = 'foo'
+        const SECRET_ADMIN_TOKEN = process.env.APP_ADMIN_TOKEN
         return req.get('X-Secret-Admin-Token') === SECRET_ADMIN_TOKEN
     }
     next()
@@ -41,14 +41,25 @@ app.use('/v1/products', productsRouter)
 
 app.get('/ping', expressPingMiddleware)
 
-// app.use((req, res) => {
-//     res.status(404).send({error: 'Route not found.'})
-// })
+app.use((_, res) => {
+    res.status(404).send({error: 'Route not found.'})
+})
 
 runServer()
 
 async function runServer() {
-    await mongoose.connect('mongodb://root:example@127.0.0.1:27017/dumplings?authSource=admin')
+    const {APP_MONGO_USERNAME, APP_MONGO_PASSWORD, APP_MONGO_HOSTNAME} = process.env
+    if (!APP_MONGO_USERNAME) {
+        throw new Error('Missing env "APP_MONGO_USERNAME"')
+    }
+    if (!APP_MONGO_PASSWORD) {
+        throw new Error('Missing env "APP_MONGO_PASSWORD"')
+    }
+    if (!APP_MONGO_HOSTNAME) {
+        throw new Error('Missing env "APP_MONGO_HOSTNAME"')
+    }
+
+    await mongoose.connect(`mongodb://${APP_MONGO_USERNAME}:${APP_MONGO_USERNAME}@${APP_MONGO_HOSTNAME}/dumplings?authSource=admin`)
     
     app.listen(8080)
 }

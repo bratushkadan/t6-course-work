@@ -3,7 +3,7 @@
 ## Build
 
 ```sh
-docker build -t client:0.1.0 .
+docker build --platform linux/amd64 -t client:0.1.1 .
 ```
 
 # React + TypeScript + Vite

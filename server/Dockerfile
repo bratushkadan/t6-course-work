@@ -18,5 +18,7 @@ COPY --from=build /app /var/www/html/app
 
 WORKDIR /var/www/html/app
 
+USER backend
+
 CMD ["/usr/local/bin/node", "./build/index.js"]
 

@@ -12,32 +12,25 @@ services:
       - 8080:8080
     network_mode: host
     environment:
-      APP_MONGO_USERNAME: root
-      APP_MONGO_PASSWORD: example
+      APP_MONGO_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      APP_MONGO_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD} 
       APP_MONGO_HOSTNAME: localhost:27017 
-      APP_ADMIN_TOKEN: foobar
+      APP_ADMIN_TOKEN: ${APP_ADMIN_TOKEN}
     depends_on:
       db:
         condition: service_started
   db:
-    image: mongo:7.0.7-jammy
     ports:
-      - 27017:27017
+      - "27017:27017"
     restart: always
-    network_mode: host
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_DATABASE: dumplings
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE:-dumplings}
     volumes:
-      - course_work_t6_mongo_volume:/data/db
+      - /mongo_data:/data/db
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
       interval: 0.5s
-      retries: 10
+      retries: 20
     
-volumes:
-  course_work_t6_mongo_volume:
-## networks:
-##   course_work_app_network:
-##     driver: bridge
