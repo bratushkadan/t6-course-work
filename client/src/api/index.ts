@@ -9,7 +9,6 @@ import type {
   ValidateTokenResponse,
   CreateUserResponse,
   Product,
-  Category,
   CartPosition,
   ChangeCartPositionPayload,
   MinimalCartPosition,
@@ -57,9 +56,6 @@ const getProducts = async () => {
 };
 const getProduct = (id: number) => v1Api.get(`products/${id}`).json<Product>().then(transformProduct);
 
-const getCategories = () => v1Api.get('categories').json<Category[]>();
-const getCategory = (id: number) => v1Api.get(`categories/${id}`).json<Category>();
-
 export const api = {
   getUser,
   getUserMeByToken,
@@ -68,8 +64,6 @@ export const api = {
   validateToken,
   getProducts,
   getProduct,
-  getCategories,
-  getCategory,
   getCart: (token: string) =>
     v1Api
       .get('cart', {

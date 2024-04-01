@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {CartPosition} from '../api/types';
 import {BlockBtn, Btn} from './generic';
 import {useShallow} from 'zustand/react/shallow';
-import {useAuth, useCart, useMe} from '../stores';
+import {useAuth, useCart} from '../stores';
 import {api} from '../api';
 import {alertError} from '../util/error';
 
@@ -28,10 +28,6 @@ export const CartControls: React.FC<CartPosition> = (props) => {
           name: props.name,
           description: props.description,
           quantity: updatedCartPosition.quantity,
-          category_id: props.category_id,
-          category_name: props.category_name,
-          store_id: props.store_id,
-          store_name: props.store_name,
           price: props.price,
           image_url: props.image_url,
         },
