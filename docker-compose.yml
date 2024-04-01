@@ -2,7 +2,7 @@ version: '3'
 
 services:
   client:
-    image: cr.yandex/crpqoulu6oud6483qllt/client:0.1.3
+    image: cr.yandex/crpqoulu6oud6483qllt/client:0.1.4
     ports:
       - 80:80
     network_mode: host
