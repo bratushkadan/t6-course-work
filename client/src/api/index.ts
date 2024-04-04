@@ -18,8 +18,7 @@ import type {
 import { transformProduct } from './util';
 
 const v1Api = ky.extend({
-  // prefixUrl: 'http://localhost:8080/v1',
-  prefixUrl: 'http://84.252.136.16:8080/v1',
+  prefixUrl: `${window.location.protocol}//${window.location.hostname}:8080/v1`,
 });
 
 const X_AUTH_TOKEN = 'X-Auth-Token';

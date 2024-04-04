@@ -25,7 +25,7 @@ docker run --rm -d --network my_bridge_network -p 8080:8080 server:0.0.2
 ### VM address
 
 ```
-84.252.136.16
+158.160.83.41
 ```
 
 ### Cloud prerequisites

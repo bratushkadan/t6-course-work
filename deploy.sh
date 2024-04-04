@@ -2,7 +2,7 @@
 
 set -e
 
-VM_ADDRESS="84.252.136.16"
+VM_ADDRESS="158.160.83.41"
 
 scp .env "${VM_ADDRESS}":.env
 scp docker-compose.yml "${VM_ADDRESS}":docker-compose.yml

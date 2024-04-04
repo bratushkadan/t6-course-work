@@ -2,12 +2,12 @@ version: '3'
 
 services:
   client:
-    image: cr.yandex/crpqoulu6oud6483qllt/client:0.1.4
+    image: ${CLIENT_SERVER_IMAGE}
     ports:
       - 80:80
     network_mode: host
   server:
-    image: cr.yandex/crpqoulu6oud6483qllt/server:0.1.3
+    image: ${BACKEND_SERVER_IMAGE}
     ports:
       - 8080:8080
     network_mode: host
