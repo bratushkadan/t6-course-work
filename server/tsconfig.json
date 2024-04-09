@@ -7,10 +7,7 @@
     "rootDir": "src",
     "strict": true,
     "outDir": "./build",
-    "paths": {
-      "@api/*": ["./src/api/*"],
-      "@models/*": ["./src/models/*"]
-    }
+    "paths": {}
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "build"]
