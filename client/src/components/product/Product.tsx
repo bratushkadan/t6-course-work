@@ -6,6 +6,7 @@ import { useAuth, useCart } from '../../stores';
 import { useShallow } from 'zustand/react/shallow';
 import { api } from '../../api';
 import { alertError } from '../../util/error';
+import './product.css'
 
 export const CartControls: React.FC<{ product: Product }> = ({ product }) => {
   const token = useAuth((state) => state.token);
@@ -87,7 +88,7 @@ export const CartControls: React.FC<{ product: Product }> = ({ product }) => {
   const item = cart.find((cartPosition) => cartPosition.product_id === product.id);
 
   return (
-    <>
+    <div className="cart-controls">
       {!item ? (
         <BlockBtn onClick={handleAddToCart}>Добавить в корзину</BlockBtn>
       ) : (
@@ -97,7 +98,7 @@ export const CartControls: React.FC<{ product: Product }> = ({ product }) => {
           <Btn onClick={() => handleDecrementCartPosition(item)}>-</Btn>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
@@ -108,11 +109,22 @@ export const ProductComponent: React.FC<
 > = (props) => {
   return (
     <div className="product-card">
-      <h2>{props.isWithProductLink ? <Link to={`/products/${props.id}`}>{props.name}</Link> : props.name}</h2>
-      <img width={150} height={150} src={props.image_url} alt={props.name} />
-      <div>{props.description}</div>
-      <div>{props.price} ₽</div>
-      {!props.isAddToCartControls ? null : <CartControls product={props} />}
+      <h2 className="product-title">
+        {props.isWithProductLink
+          ? <Link to={`/products/${props.id}`}>
+              {props.name}
+            </Link>
+          : props.name
+        }
+      </h2>
+      <div className='product-image'>
+          <img src={props.image_url} alt={props.name} />
+      </div>
+      <div className='product-details'>
+        <div className='product-description'>{props.description}</div>
+      </div>
+      <div className='product-price'>{props.price} ₽</div>
+      {props.isAddToCartControls && <CartControls product={props} />}
     </div>
   );
 };

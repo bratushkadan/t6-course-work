@@ -8,6 +8,7 @@ export const Btn = styled.button`
 export const BlockBtn = styled(Btn)`
   display: block;
   margin: .5rem 0;
+
 `
 
 export const BlockInput = styled.input`

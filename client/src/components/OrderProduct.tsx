@@ -6,14 +6,27 @@ export const OrderProductComponent: React.FC<Order['positions'][number] & { isWi
   props
 ) => {
   return (
-    <div className="order-product-card">
-      <h2>{props.isWithProductLink ? <Link to={`/products/${props.product_id}`}>{props.name}</Link> : props.name}</h2>
-      <img width={150} height={150} src={props.image_url} alt={props.name} />
-      <div>{props.description}</div>
-      <div>{props.price} ₽</div>
-      {props.quantity > 1 && <div>{props.quantity} позиций</div>}
-      {props.quantity > 1 && <div>Всего {props.quantity * props.price} ₽</div>}
-      <hr />
+    <div className="order-product-card cart-position-card">
+      <h2 className="cart-position-title">
+        {props.isWithProductLink
+          ? <Link
+              to={`/products/${props.product_id}`}>
+                {props.name}
+            </Link>
+          : props.name}
+      </h2>
+      <div className="cart-position-image">
+        <img src={props.image_url} alt={props.name} />
+      </div>
+      <div className="cart-position-description">
+        {props.description}
+        {props.quantity > 1 && <p>
+          <hr/>
+          <div>{props.quantity} позиций</div>
+          <div>Всего {props.quantity * props.price} ₽</div>
+        </p>}
+      </div>
+      <div className="cart-position-price" style={{alignSelf: 'flex-end'}}>{props.price} ₽</div>
     </div>
   );
 };

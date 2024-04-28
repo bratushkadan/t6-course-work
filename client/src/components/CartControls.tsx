@@ -81,7 +81,7 @@ export const CartControls: React.FC<CartPosition> = (props) => {
   const item = cart.find((cartPosition) => cartPosition.product_id === props.product_id);
 
   return (
-    <>
+    <div className="cart-controls">
       {!item ? (
         <BlockBtn onClick={handleAddToCart}>Добавить в корзину</BlockBtn>
       ) : (
@@ -91,6 +91,6 @@ export const CartControls: React.FC<CartPosition> = (props) => {
           <Btn onClick={() => handleDecrementCartPosition(item)}>-</Btn>
         </div>
       )}
-    </>
+    </div>
   );
 };
